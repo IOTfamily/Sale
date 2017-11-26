@@ -50,3 +50,44 @@ spring.redis.pool.max-wait=-1
 spring.redis.pool.min-idle=0
 spring.redis.port=6379
 ```
+
+
+
+##包介绍
+
+### Lombok
+
+Lombok想要解决了的是在我们实体Bean中大量的Getter/Setter方法，以及toString, hashCode等可能不会用到，但是某些时候仍然需要复写，以期方便使用的方法；在使用Lombok之后，将由其来自动帮你实现代码生成，注意，其是在运行过程中，帮你自动生成的。就是说，将极大减少你的代码总量。
+
+> [使用方式](http://blog.csdn.net/blueheart20/article/details/52909775)
+
+### mysql-connector-java
+
+> [使用方式](http://blog.csdn.net/catoop/article/details/50507516)
+
+
+### commons-io
+
+> [使用方式](http://blog.csdn.net/tiantang_1986/article/details/51034401)
+
+### commons-net
+
+Apache commons net 项目中封装了各种网络协议的客户端
+
+> [使用方式](http://blog.csdn.net/ffm83/article/details/42144363)
+
+### joda-time
+
+Joda-Time 令时间和日期值变得易于管理、操作和理解。事实上，易于使用是 Joda 的主要设计目标。其他目标包括可扩展性、完整的特性集以及对多种日历系统的支持。
+> [使用方式](https://www.ibm.com/developerworks/cn/java/j-jodatime.html)
+
+
+### springfox-swagger2
+
+可以轻松的整合到Spring Boot中，并与Spring MVC程序配合组织出强大RESTful API文档
+> [使用方式](https://www.cnblogs.com/xiaohanghang/p/6018654.html)
+
+### commons-beanutils
+
+可以很方便的对bean对象的属性进行操作。今天为大家介绍一下该包的常用方法。
+> [使用方式](http://blog.csdn.net/jianggujin/article/details/51104949)
