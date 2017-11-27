@@ -1,5 +1,7 @@
 package com.iot.sale.Service.controller;
 
+import com.iot.sale.Base.web.BaseController;
+import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.dao.FruitGoodDao;
 import com.iot.sale.Service.entity.FruitGood;
 import lombok.extern.slf4j.Slf4j;
@@ -20,20 +22,23 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/index")
 @Slf4j
-public class IndexController {
+public class IndexController extends BaseController{
 
     @Autowired
     FruitGoodDao fruitGoodDao;
 
     @RequestMapping("")
-    public HashMap<Object,Object> index(HttpServletRequest request) {
+    public JsonResult index(HttpServletRequest request) {
         System.out.println(request);
         System.out.println("============");
-        HashMap<Object,Object> map = new HashMap<>();
+        HashMap<String,Object> map = new HashMap<>();
         FruitGood good = new FruitGood();
         good = fruitGoodDao.findById("1818");
         map.put("good",good);
-        return map;
+        JsonResult res =  createSuccessResult();
+        res.setData(map);
+
+        return res;
     }
 
     @RequestMapping("/about")
