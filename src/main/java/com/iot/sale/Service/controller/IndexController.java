@@ -1,12 +1,13 @@
 package com.iot.sale.Service.controller;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.iot.sale.Service.dao.FruitGoodDao;
+import com.iot.sale.Service.entity.FruitGood;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.HashMap;
 
 /******************************************
@@ -18,14 +19,20 @@ import java.util.HashMap;
  ******************************************/
 @RestController
 @RequestMapping("/index")
-//@Slf4j
+@Slf4j
 public class IndexController {
 
+    @Autowired
+    FruitGoodDao fruitGoodDao;
+
     @RequestMapping("")
-    public HashMap<String,String> index(HttpServletRequest request) {
+    public HashMap<Object,Object> index(HttpServletRequest request) {
         System.out.println(request);
         System.out.println("============");
-        HashMap<String,String> map = new HashMap<>();
+        HashMap<Object,Object> map = new HashMap<>();
+        FruitGood good = new FruitGood();
+        good = fruitGoodDao.findById("1818");
+        map.put("good",good);
         return map;
     }
 
