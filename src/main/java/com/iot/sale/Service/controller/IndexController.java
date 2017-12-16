@@ -4,6 +4,7 @@ import com.iot.sale.Base.web.BaseController;
 import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.dao.FruitGoodDao;
 import com.iot.sale.Service.entity.FruitGood;
+import com.iot.sale.Service.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class IndexController extends BaseController{
 
     @Autowired
     FruitGoodDao fruitGoodDao;
+
 
     @RequestMapping("")
     public JsonResult index(HttpServletRequest request) {
