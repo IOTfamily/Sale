@@ -145,6 +145,15 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!--阿里大于-->
+		<dependency>
+			<groupId>com.aliyun.mns</groupId>
+			<artifactId>aliyun-sdk-mns</artifactId>
+			<version>1.1.8</version>
+			<classifier>jar-with-dependencies</classifier>
+		</dependency>
+
 	</dependencies>
 
 	<build>
