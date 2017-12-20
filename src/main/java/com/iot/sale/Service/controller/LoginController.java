@@ -30,7 +30,7 @@ public class LoginController extends BaseController {
     @Autowired
     LoginService loginService;
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public JsonResult index(@RequestParam(value = "name", required = true) String name,
                             @RequestParam(value = "password", required = true) String password,
                             HttpServletRequest request) {
@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
         return this.createSuccessResult();
     }
 
-    @RequestMapping("logout")
+    @RequestMapping("/logout")
     public JsonResult logout(HttpSession session) {
         // 移除session
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
@@ -59,7 +59,7 @@ public class LoginController extends BaseController {
         return this.createSuccessResult();
     }
 
-    @RequestMapping("register")
+    @RequestMapping("/register")
     public JsonResult register(@RequestParam(value = "name", required = true) String name,
                                @RequestParam(value = "password", required = true) String password,
                                @RequestParam(value = "auth", required = true) String auth,
