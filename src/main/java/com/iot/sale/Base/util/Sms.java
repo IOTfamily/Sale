@@ -22,7 +22,7 @@ import java.util.Map;
  * @Description: 建议填写
  ******************************************/
 public class Sms {
-    public void test() {
+    public static void test() {
         /**
          * Step 1. 获取主题引用
          */
@@ -71,7 +71,7 @@ public class Sms {
     }
 
 
-    public Boolean sendSms(String phoneNumber, Map<String, String> map){
+    public static Boolean sendSms(String phoneNumber, String tmpCode, Map<String, String> map){
         Boolean res = false;
         CloudAccount account = new CloudAccount("LTAIEs5ukzNnU0ZS", "iHNDQnh81GvgQED9xk3qZcqSv6EL8J", "https://1048047233454598.mns.cn-hangzhou.aliyuncs.com/");
         MNSClient client = account.getMNSClient();
@@ -85,7 +85,7 @@ public class Sms {
         // 3.1 设置发送短信的签名（SMSSignName）
         batchSmsAttributes.setFreeSignName("水滴");
         // 3.2 设置发送短信使用的模板（SMSTempateCode）
-        batchSmsAttributes.setTemplateCode("SMS_78760146");
+        batchSmsAttributes.setTemplateCode(tmpCode);
         // 3.3 设置发送短信所使用的模板中参数对应的值（在短信模板中定义的，没有可以不用设置）
         BatchSmsAttributes.SmsReceiverParams smsReceiverParams = new BatchSmsAttributes.SmsReceiverParams();
         for (Map.Entry<String, String> entry : map.entrySet()) {

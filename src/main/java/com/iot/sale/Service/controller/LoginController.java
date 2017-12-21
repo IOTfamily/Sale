@@ -5,6 +5,7 @@ import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.config.WebSecurityConfig;
 import com.iot.sale.Service.entity.FruitGood;
 import com.iot.sale.Service.service.LoginService;
+import com.iot.sale.Service.service.SmsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 /******************************************
  * @author: lio
@@ -30,6 +32,9 @@ public class LoginController extends BaseController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    private SmsService smsService;
+
     @RequestMapping("/login")
     public JsonResult index(@RequestParam(value = "name", required = true) String name,
                             @RequestParam(value = "password", required = true) String password,
@@ -43,19 +48,15 @@ public class LoginController extends BaseController {
             // 设置session
             session.setAttribute(WebSecurityConfig.SESSION_KEY,check_result);
         }else{
-            res.setCode("Error");
-            res.setDesc("登录失败");
+            res.setCode("ERR_LOG_LOGIN_ERROR");
         }
-        System.out.println(session.getAttribute(WebSecurityConfig.SESSION_KEY));
-        System.out.println("====== login ========");
-        return this.createSuccessResult();
+        return res;
     }
 
     @RequestMapping("/logout")
     public JsonResult logout(HttpSession session) {
         // 移除session
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
-        System.out.println("====== logout ========");
         return this.createSuccessResult();
     }
 
@@ -64,13 +65,33 @@ public class LoginController extends BaseController {
                                @RequestParam(value = "password", required = true) String password,
                                @RequestParam(value = "auth", required = true) String auth,
                                HttpServletRequest request) {
-        // Todo 等接完短信auth换成短信验证，暂时就两次密码认证
-        String uid = loginService.register(name,password,auth);
-        if (uid != null) return this.createSuccessResult();
+        JsonResult res = this.createSuccessResult();
+        Boolean authRes = smsService.isValidCode(name, auth);
+        Map<String,Object> registerRes = loginService.register(name, password, authRes);
+        if (registerRes.get("code") == null){
+            // 设置session
+            HttpSession session = request.getSession();
+            session.setAttribute(WebSecurityConfig.SESSION_KEY, registerRes.get("uid"));
+            return res;
+        };
 
-        JsonResult res = new JsonResult();
-        res.setCode("Error");
-        res.setMsg("注册失败");
+        res.setCode(registerRes.get("code").toString());
         return res;
     }
+
+    @RequestMapping("/getVcode")
+    public JsonResult getVcode(@RequestParam(value = "phone", required = true) String phone,
+                               HttpServletRequest request) {
+        JsonResult res = this.createSuccessResult();
+
+        HttpSession session = request.getSession();
+        if(session.getAttribute(WebSecurityConfig.SESSION_KEY) != null){
+            res.setCode("ERR_SYS_SID_INVALID");
+            return res;
+        }
+        Map<String,Object> code = smsService.createVcode(phone);
+        res.setData(code);
+        return res;
+    }
+
 }

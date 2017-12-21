@@ -1,5 +1,7 @@
 package com.iot.sale.Service.service;
 
+import java.util.Map;
+
 /******************************************
  * @author: lio (yanhui@51huxin.com)
  * @createDate: 2017/12/16
@@ -23,7 +25,7 @@ public interface LoginService {
      * @param auth
      * @return
      */
-    public String register(String name, String password, String auth);
+    public Map<String, Object> register(String name, String password, Boolean auth);
 
 
     /**

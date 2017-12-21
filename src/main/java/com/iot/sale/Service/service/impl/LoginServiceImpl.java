@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /******************************************
  * @author: lio (yanhui@51huxin.com)
@@ -34,16 +35,19 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public String register(String phoneNumber, String password, String auth) {
+    public Map<String, Object> register(String phoneNumber, String password, Boolean auth) {
         // 验证手机号是否存在
         HashMap<String,Object> condition = new HashMap<>();
         condition.put("phone_number",phoneNumber);
         FruitUser fruitUser = fruitUserDao.findObjByFields(condition);
         if(fruitUser != null) return null;
-        // auth 认证
-        if(!password.equals(auth)) return null;
+        // "auth" 认证
+        if(!auth) condition.put("code","ERR_LOG_REG_VALIDATE_FAILURE");
         condition.put("password",password);
-        return fruitUserDao.saveReturnPrimary(condition);
+        String uid = fruitUserDao.saveReturnPrimary(condition);
+        condition.put("uid",uid);
+        condition.put("code",null);
+        return condition;
     }
 
     @Override

@@ -141,7 +141,6 @@ public class ErrorCodeConfig {
     public static final String ERR_LOG_BANK_CARD_NOT_FOUND = "ERR_LOG_BANK_CARD_NOT_FOUND";
     public static final String ERR_LOG_BANK_CARD_AUTH_FAILURE = "ERR_LOG_BANK_CARD_AUTH_FAILURE";
     public static final String ERR_LOG_BANK_CARD_AUTH_WRONG = "ERR_LOG_BANK_CARD_AUTH_WRONG";
-    public static final String ERR_QB_LOG_LOAN_LACK_OF_CREDIT = "ERR_QB_LOG_LOAN_LACK_OF_CREDIT";
     public static final String ERR_QB_LOG_LOAN_SUBMIT_FAILURE = "ERR_QB_LOG_LOAN_SUBMIT_FAILURE";
     public static final String ERR_QB_LOG_LOAN_CREATE_ORDER_FAILURE = "ERR_QB_LOG_LOAN_CREATE_ORDER_FAILURE";
     public static final String ERR_QB_LOG_REPAY_TOO_FAST = "ERR_QB_LOG_REPAY_TOO_FAST";
@@ -313,7 +312,6 @@ public class ErrorCodeConfig {
         map.put(ERR_LOG_BANK_CARD_NOT_FOUND, "请先填写基本信息");
         map.put(ERR_LOG_BANK_CARD_AUTH_FAILURE, "认证失败");
         map.put(ERR_LOG_BANK_CARD_AUTH_WRONG, "认证失败");
-        map.put(ERR_QB_LOG_LOAN_LACK_OF_CREDIT, "信用额度不足，请先提升额度");
         map.put(ERR_QB_LOG_LOAN_SUBMIT_FAILURE, "提现信息提交失败");
         map.put(ERR_QB_LOG_LOAN_CREATE_ORDER_FAILURE, "创建订单失败");
         map.put(ERR_QB_LOG_REPAY_TOO_FAST, "当前有一笔还款正在处理");
