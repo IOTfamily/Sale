@@ -38,16 +38,24 @@ public class LoginServiceImpl implements LoginService {
     public Map<String, Object> register(String phoneNumber, String password, Boolean auth) {
         // 验证手机号是否存在
         HashMap<String,Object> condition = new HashMap<>();
+        HashMap<String,Object> resultMap = new HashMap<>();
         condition.put("phone_number",phoneNumber);
         FruitUser fruitUser = fruitUserDao.findObjByFields(condition);
-        if(fruitUser != null) return null;
+        if(fruitUser != null) {
+            System.out.println("Oops! User is existed");
+            resultMap.put("code","ERR_LOG_REG_USER_PHONE_NUM_EXISTED");
+            return resultMap;
+        }
         // "auth" 认证
-        if(!auth) condition.put("code","ERR_LOG_REG_VALIDATE_FAILURE");
+        if(!auth){
+            resultMap.put("code","ERR_LOG_REG_VALIDATE_FAILURE");
+            return resultMap;
+        }
         condition.put("password",password);
         String uid = fruitUserDao.saveReturnPrimary(condition);
-        condition.put("uid",uid);
-        condition.put("code",null);
-        return condition;
+        resultMap.put("uid",uid);
+        resultMap.put("code",null);
+        return resultMap;
     }
 
     @Override
