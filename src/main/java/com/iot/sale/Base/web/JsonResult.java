@@ -46,6 +46,14 @@ public class JsonResult implements Serializable {
         }
     }
 
+    public JsonResult setCode(String code,Boolean down) {
+        this.code = code;
+        if (ErrorCodeConfig.hasErrorCode(code)) {
+            this.msg = ErrorCodeConfig.getErrorMsg(code);
+        }
+        return this;
+    }
+
     public String getMsg() {
         return msg;
     }

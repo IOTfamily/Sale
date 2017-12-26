@@ -1,5 +1,7 @@
 package com.iot.sale.Service.controller;
 
+import com.iot.sale.Base.util.DateUtil;
+import com.iot.sale.Base.util.Sms;
 import com.iot.sale.Base.web.BaseController;
 import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.config.WebSecurityConfig;
@@ -90,7 +92,19 @@ public class LoginController extends BaseController {
             return res;
         }
         Map<String,Object> code = smsService.createVcode(phone);
-        res.setData(code);
+        if(!code.get("code").equals("success")){
+            res.setCode(code.get("code").toString());
+            return res;
+        }
+        Map<String, String> map = new HashMap<>();
+        DateUtil dateUtil = new DateUtil();
+        map.put("name", code.get("vCode").toString());
+        map.put("time", dateUtil.getFormatDate());
+        if(Sms.sendSms(phone,"SMS_78760146", map)){
+            res.setData(code);
+            return res;
+        }
+        res.setCode("ERR_LOG_VERIFY_CODE_SEND_FALSE");
         return res;
     }
 
