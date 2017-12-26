@@ -70,12 +70,14 @@ public class LoginController extends BaseController {
         JsonResult res = this.createSuccessResult();
         Boolean authRes = smsService.isValidCode(name, auth);
         Map<String,Object> registerRes = loginService.register(name, password, authRes);
+
+
         if (registerRes.get("code") == null){
             // 设置session
             HttpSession session = request.getSession();
             session.setAttribute(WebSecurityConfig.SESSION_KEY, registerRes.get("uid"));
             return res;
-        };
+        }
 
         res.setCode(registerRes.get("code").toString());
         return res;
