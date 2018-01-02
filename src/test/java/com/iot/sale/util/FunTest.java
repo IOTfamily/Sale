@@ -25,4 +25,9 @@ public class FunTest {
         }
         System.out.println(randCode.toString());
     }
+
+    @Test
+    public void log(){
+        log();
+    }
 }

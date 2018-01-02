@@ -50,13 +50,14 @@ public class GoodController extends BaseController {
         return res;
     }
 
+    @ResponseBody
     @ApiOperation(value="获取商品详情",httpMethod = "POST", response = GetGoodResponse.class, notes = "商品详情")
     @ApiImplicitParam(name = "request", required = true, dataType = "GetGoodRequest")
     // Todo 没有request bean 的注释方式
     //@ApiImplicitParam(paramType="query", name = "id", value = "商品编号", required = true, dataType = "String")
     @PostMapping("/get")
     ///public JsonResult getGood(@ApiParam("商品ID") @RequestParam String id){
-    public ApiResponse getGood(@RequestBody ApiRequest<GetGoodRequest> request){
+    public ApiResponse getGood(@RequestBody @Valid ApiRequest<GetGoodRequest> request){
         GetGoodRequest goodRequestBean = request.getData();
         GetGoodResponse fruitGood = goodService.getGood(goodRequestBean.getId().toString());
 
