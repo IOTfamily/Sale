@@ -1,6 +1,7 @@
 package com.iot.sale.Service.controller;
 
 import com.iot.sale.Base.web.ApiRequest;
+import com.iot.sale.Base.web.ApiResponse;
 import com.iot.sale.Base.web.BaseController;
 import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.bean.request.good.GetGoodRequest;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -54,11 +56,11 @@ public class GoodController extends BaseController {
     //@ApiImplicitParam(paramType="query", name = "id", value = "商品编号", required = true, dataType = "String")
     @PostMapping("/get")
     ///public JsonResult getGood(@ApiParam("商品ID") @RequestParam String id){
-    public JsonResult getGood(@RequestBody ApiRequest<GetGoodRequest> request){
+    public ApiResponse getGood(@RequestBody ApiRequest<GetGoodRequest> request){
         GetGoodRequest goodRequestBean = request.getData();
         GetGoodResponse fruitGood = goodService.getGood(goodRequestBean.getId().toString());
 
-        JsonResult res = this.createSuccessResult();
+        ApiResponse res = ApiResponse.buildSuccess();
         res.put("goodDetail",fruitGood);
         return res;
     }
