@@ -12,11 +12,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,17 +38,15 @@ public class GoodController extends BaseController {
     @Autowired
     private GoodService goodService;
 
+    //TODO: 统一成 ApiResponse和 ApiRequest形式
     @RequestMapping("list")
     public JsonResult show(HttpServletRequest request) {
         JsonResult res =  createSuccessResult();
         List<Map<String, Object>> list = goodService.getGoodListInHome();
-        for(Map<String, Object> item: list){
-            for(String key :item.keySet()){
-                System.out.println(key);
-            }
-            System.out.println("<><>>");
-            res.setData(item);
-        }
+        HashMap<String, Object> map = new HashMap(1);
+        map.put("list",list);
+        System.out.println("<><>>");
+        res.setData(map);
         return res;
     }
 
