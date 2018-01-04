@@ -15,9 +15,11 @@ import java.util.Map;
  ******************************************/
 public interface GoodService {
 
-    public List<Map<String, Object>> getGoodListInHome();
+    List<Map<String, Object>> getGoodListInHome();
 
-    public GetGoodResponse getGood(String id);
+    GetGoodResponse getGood(String id);
 
     FruitGood getGoodJson(String id);
+
+    List<Object> queryCategoriesTree();
 }

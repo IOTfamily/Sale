@@ -66,14 +66,13 @@ public class GoodController extends BaseController {
         return res;
     }
 
-    @ApiOperation(value="获取商品详情",httpMethod = "POST", response = GetGoodResponse.class, notes = "商品详情")
-    @ApiImplicitParam(paramType="query", name = "id", value = "商品编号", required = true, dataType = "String")
-    @PostMapping("/test")
-    public JsonResult test(@ApiParam("商品ID") @RequestParam String id){
-        GetGoodResponse fruitGood = goodService.getGood(id);
+    @ApiOperation(value="获取商品分类",httpMethod = "POST", response = GetGoodResponse.class, notes = "商品分类")
+    @PostMapping("/category")
+    public ApiResponse category(){
 
-        JsonResult res = this.createSuccessResult();
-        res.put("goodDetail",fruitGood);
+        List<Object> list = goodService.queryCategoriesTree();
+        ApiResponse res = ApiResponse.buildSuccess();
+        res.put("goodCategory",list);
         return res;
     }
 }

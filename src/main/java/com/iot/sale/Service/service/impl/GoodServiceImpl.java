@@ -5,6 +5,7 @@ import com.iot.sale.Service.bean.response.good.GetGoodResponse;
 import com.iot.sale.Service.bean.vo.Album;
 import com.iot.sale.Service.dao.FruitGoodAlbumDao;
 import com.iot.sale.Service.dao.FruitGoodDao;
+import com.iot.sale.Service.dao.FruitGoodMenuDao;
 import com.iot.sale.Service.entity.FruitGood;
 import com.iot.sale.Service.entity.FruitGoodAlbum;
 import com.iot.sale.Service.service.GoodService;
@@ -32,6 +33,9 @@ public class GoodServiceImpl implements GoodService {
 
     @Autowired
     private FruitGoodAlbumDao fruitGoodAlbumDao;
+
+    @Autowired
+    private FruitGoodMenuDao fruitGoodMenuDao;
 
     @Override
     public List<Map<String, Object>> getGoodListInHome() {
@@ -109,5 +113,25 @@ public class GoodServiceImpl implements GoodService {
         fruitGood.setShow(fruitGoodAlbumShow.getValue());
 
         return fruitGood;
+    }
+
+    @Override
+    public List<Object> queryCategoriesTree() {
+        List<Map<String, Object>> cateList = fruitGoodMenuDao.findAll();
+        return this.getTree(cateList, "0");
+    }
+
+    private List<Object> getTree(List<Map<String, Object>> cateLists, String pid) {
+        List<Object> list = new ArrayList<>();
+        for (Map<String, Object> cateList : cateLists) {
+            if (cateList.get("pid").toString().equals(pid)) {
+                List<Object> subList = this.getTree(cateLists, String.valueOf(cateList.get("id")));
+                if (subList != null) {
+                    cateList.put("list", subList);
+                }
+                list.add(cateList);
+            }
+        }
+        return list;
     }
 }
