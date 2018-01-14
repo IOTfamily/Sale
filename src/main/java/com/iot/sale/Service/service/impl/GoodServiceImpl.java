@@ -1,8 +1,11 @@
 package com.iot.sale.Service.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.iot.sale.Base.util.Pager;
 import com.iot.sale.Service.bean.response.good.GetGoodResponse;
+import com.iot.sale.Service.bean.response.good.GetHomeListResponse;
 import com.iot.sale.Service.bean.vo.Album;
+import com.iot.sale.Service.bean.vo.GoodInfoSimple;
 import com.iot.sale.Service.dao.FruitGoodAlbumDao;
 import com.iot.sale.Service.dao.FruitGoodDao;
 import com.iot.sale.Service.dao.FruitGoodMenuDao;
@@ -15,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /******************************************
  * @author: lio (yanhui@51huxin.com)
@@ -38,8 +41,51 @@ public class GoodServiceImpl implements GoodService {
     private FruitGoodMenuDao fruitGoodMenuDao;
 
     @Override
-    public List<Map<String, Object>> getGoodListInHome() {
-        return fruitGoodDao.findAll();
+    public HashMap<String, Object> getGoodListInHometest(int pageNum) {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        Pager<FruitGood> pager = new Pager<>(GoodService.PAGE_SIZE, 0L, pageNum);
+        //Pager的构造函数中会根据totalCount来确认currentPage,所以强行搞一下!F***
+        pager.setCurrentPage(pageNum);
+        fruitGoodDao.findAllPage(pager);
+        List<FruitGood> resultList = pager.getDataList();
+        resultMap.put("list", pager.getDataList());
+        resultMap.put(GoodService.KEY_CUEENT_PAGE_NUM, pager.getCurrentPage());
+        if(resultList==null || resultList.isEmpty() ||
+                resultList.size()< pager.getPageSize()){
+            resultMap.put(GoodService.KEY_HAS_NEXT, false);
+            return resultMap;
+        }
+        resultMap.put(GoodService.KEY_HAS_NEXT, true);
+        return resultMap;
+    }
+
+    @Override
+    public GetHomeListResponse getGoodListInHome(int pageNum) {
+        GetHomeListResponse getHomeListResponse = new GetHomeListResponse();
+        getHomeListResponse.setPageNum(pageNum);
+        List<GoodInfoSimple> resultList = new ArrayList<>();
+        Pager<FruitGood> pager = new Pager<>(GoodService.PAGE_SIZE, 0L, pageNum);
+        //Pager的构造函数中会根据totalCount来确认currentPage,所以强行搞一下!F***
+        pager.setCurrentPage(pageNum);
+        fruitGoodDao.findAllPage(pager);
+        List<FruitGood> goodList = pager.getDataList();
+        getHomeListResponse.setList(resultList);
+        if (goodList == null || goodList.isEmpty()) {
+            getHomeListResponse.setHasNext(false);
+        } else{
+            getHomeListResponse.setHasNext(true);
+            for (FruitGood good : goodList) {
+                GoodInfoSimple goodInfoSimple = new GoodInfoSimple();
+                goodInfoSimple.setId(good.getId());
+                goodInfoSimple.setPrice(good.getPrice());
+                goodInfoSimple.setTitle(good.getTitle());
+                String imageId = good.getShow();
+                FruitGoodAlbum fruitGoodAlbum = fruitGoodAlbumDao.findById(imageId);
+                goodInfoSimple.setShow(fruitGoodAlbum.getValue());
+                resultList.add(goodInfoSimple);
+              }
+        }
+        return getHomeListResponse;
     }
 
     @Override
