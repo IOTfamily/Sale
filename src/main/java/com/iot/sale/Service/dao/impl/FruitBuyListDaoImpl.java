@@ -1,11 +1,11 @@
 package com.iot.sale.Service.dao.impl;
 
 import com.iot.sale.Base.dao.impl.BaseJdbcDaoImpl;
+import com.iot.sale.Service.dao.FruitGoodOrderDao;
+import com.iot.sale.Service.entity.FruitGoodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import com.iot.sale.Service.dao.FruitBuyListDao;
-import com.iot.sale.Service.entity.FruitBuyList;
 
 /******************************************
 * @fileName: FruitBuyListDaoImpl 
@@ -15,7 +15,7 @@ import com.iot.sale.Service.entity.FruitBuyList;
 ******************************************/ 
 
 @Service("fruitBuyListDao")
-public class FruitBuyListDaoImpl extends BaseJdbcDaoImpl<FruitBuyList> implements FruitBuyListDao {
+public class FruitBuyListDaoImpl extends BaseJdbcDaoImpl<FruitGoodOrder> implements FruitGoodOrderDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Override

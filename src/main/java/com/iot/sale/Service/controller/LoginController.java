@@ -44,6 +44,7 @@ public class LoginController extends BaseController {
         JsonResult res = new JsonResult();
 
         Integer check_result = loginService.login(name,password);
+
         HttpSession session = request.getSession();
         if(session.getAttribute(WebSecurityConfig.SESSION_KEY) != null) return res;
         if(check_result != null){
@@ -65,10 +66,12 @@ public class LoginController extends BaseController {
     @RequestMapping("/register")
     public JsonResult register(@RequestParam(value = "name", required = true) String name,
                                @RequestParam(value = "password", required = true) String password,
-                               @RequestParam(value = "auth", required = true) String auth,
+                               @RequestParam(value = "auth", required = true,defaultValue = "true") String auth,
                                HttpServletRequest request) {
         JsonResult res = this.createSuccessResult();
-        Boolean authRes = smsService.isValidCode(name, auth);
+        // Todo 暂时关掉
+        //Boolean authRes = smsService.isValidCode(name, auth);
+        Boolean authRes = true;
         Map<String,Object> registerRes = loginService.register(name, password, authRes);
 
 

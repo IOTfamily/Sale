@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "fruit_buy_list", pk = "id")
 @ApiModel(value = "FruitBuyList", description = "购物清单")
-public class FruitBuyList implements Serializable {
+public class FruitGoodOrder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,12 +39,12 @@ public class FruitBuyList implements Serializable {
 
 
 	@ApiModelProperty(value = "购买数量")
-	@Column(name = "num")
-	@JsonProperty("num")
-	private Integer num;
+	@Column(name = "count")
+	@JsonProperty("count")
+	private Integer count;
 
 
-	@ApiModelProperty(value = "支付订单号")
+	@ApiModelProperty(value = "支付成功订单号")
 	@Column(name = "pay_no")
 	@JsonProperty("payNo")
 	private String payNo;

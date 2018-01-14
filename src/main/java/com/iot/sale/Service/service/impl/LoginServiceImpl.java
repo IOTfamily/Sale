@@ -42,7 +42,6 @@ public class LoginServiceImpl implements LoginService {
         condition.put("phone_number",phoneNumber);
         FruitUser fruitUser = fruitUserDao.findObjByFields(condition);
         if(fruitUser != null) {
-            System.out.println("Oops! User is existed");
             resultMap.put("code","ERR_LOG_REG_USER_PHONE_NUM_EXISTED");
             return resultMap;
         }
