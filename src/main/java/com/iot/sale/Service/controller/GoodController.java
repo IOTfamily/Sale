@@ -5,7 +5,10 @@ import com.iot.sale.Base.web.ApiResponse;
 import com.iot.sale.Base.web.BaseController;
 import com.iot.sale.Base.web.JsonResult;
 import com.iot.sale.Service.bean.request.good.GetGoodRequest;
+import com.iot.sale.Service.bean.request.good.GetHomeListRequest;
 import com.iot.sale.Service.bean.response.good.GetGoodResponse;
+import com.iot.sale.Service.bean.response.good.GetHomeListResponse;
+import com.iot.sale.Service.entity.FruitGood;
 import com.iot.sale.Service.service.GoodService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,14 +42,29 @@ public class GoodController extends BaseController {
     private GoodService goodService;
 
     //TODO: 统一成 ApiResponse和 ApiRequest形式
-    @RequestMapping("list")
-    public JsonResult show(HttpServletRequest request) {
+    @RequestMapping("listtest")
+    public JsonResult show(@RequestParam(value = "pageNum", required = true) int pageNum,
+                           HttpServletRequest request) {
         JsonResult res =  createSuccessResult();
-        List<Map<String, Object>> list = goodService.getGoodListInHome();
-        HashMap<String, Object> map = new HashMap(1);
-        map.put("list",list);
-        System.out.println("<><>>");
-        res.setData(map);
+        System.out.println("goodService.show()");
+        res.setData(goodService.getGoodListInHometest(pageNum));
+        return res;
+    }
+
+
+    @ResponseBody
+    @ApiOperation(value="获取首页商品列表",httpMethod = "POST", response = GetHomeListResponse.class, notes = "首页商品列表")
+    @ApiImplicitParam(name = "request", required = true, dataType = "GetHomeListRequest")
+    // Todo 没有request bean 的注释方式
+    @PostMapping("/list")
+    public ApiResponse show(@RequestBody @Valid ApiRequest<GetHomeListRequest> request) {
+        GetHomeListRequest homeListRequestBean = request.getData();
+        GetHomeListResponse response = goodService.getGoodListInHome(homeListRequestBean.getPageNum());
+        ApiResponse res = ApiResponse.buildSuccess();
+        res.put("goodList",response.getList());
+        res.put(GoodService.KEY_HAS_NEXT, response.getHasNext());
+        res.put(GoodService.KEY_CUEENT_PAGE_NUM, response.getPageNum());
+        System.out.println("goodService.show()");
         return res;
     }
 
@@ -60,7 +78,6 @@ public class GoodController extends BaseController {
     public ApiResponse getGood(@RequestBody @Valid ApiRequest<GetGoodRequest> request){
         GetGoodRequest goodRequestBean = request.getData();
         GetGoodResponse fruitGood = goodService.getGood(goodRequestBean.getId().toString());
-
         ApiResponse res = ApiResponse.buildSuccess();
         res.put("goodDetail",fruitGood);
         return res;

@@ -20,8 +20,6 @@ import java.io.Serializable;
 @ApiModel(value = "GetGoodRequest", description = "查找商品详细信息")
 public class GetGoodRequest implements Serializable {
 
-
-    @NotEmpty
     @ApiModelProperty(value = "商品ID", example = "1", required = true)
     @JsonProperty("id")
     public Integer id;
