@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /******************************************
  * @author: lio (yanhui@51huxin.com)
@@ -39,6 +40,11 @@ public class GoodServiceImpl implements GoodService {
 
     @Autowired
     private FruitGoodMenuDao fruitGoodMenuDao;
+
+    @Override
+    public List<Map<String, Object>> getGoodListInHome() {
+        return fruitGoodDao.findAll();
+    }
 
     @Override
     public HashMap<String, Object> getGoodListInHometest(int pageNum) {
