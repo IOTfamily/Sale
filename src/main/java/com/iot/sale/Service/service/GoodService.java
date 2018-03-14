@@ -23,7 +23,7 @@ public interface GoodService {
 
     public static final String KEY_CUEENT_PAGE_NUM = "currentPageNum";
 
-    public static final int PAGE_SIZE = 2;
+    public static final int PAGE_SIZE = 10;
 
     public HashMap<String, Object> getGoodListInHometest(int pageNum);
 
