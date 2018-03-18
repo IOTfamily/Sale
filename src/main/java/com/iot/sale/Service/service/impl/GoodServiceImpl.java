@@ -78,19 +78,19 @@ public class GoodServiceImpl implements GoodService {
         getHomeListResponse.setList(resultList);
         if (goodList == null || goodList.isEmpty()) {
             getHomeListResponse.setHasNext(false);
-        } else{
-            getHomeListResponse.setHasNext(true);
-            for (FruitGood good : goodList) {
-                GoodInfoSimple goodInfoSimple = new GoodInfoSimple();
-                goodInfoSimple.setId(good.getId());
-                goodInfoSimple.setPrice(good.getPrice());
-                goodInfoSimple.setTitle(good.getTitle());
-                String imageId = good.getShow();
-                FruitGoodAlbum fruitGoodAlbum = fruitGoodAlbumDao.findById(imageId);
-                goodInfoSimple.setShow(fruitGoodAlbum.getValue());
-                resultList.add(goodInfoSimple);
-              }
+            return getHomeListResponse;
         }
+        for (FruitGood good : goodList) {
+            GoodInfoSimple goodInfoSimple = new GoodInfoSimple();
+            goodInfoSimple.setId(good.getId());
+            goodInfoSimple.setPrice(good.getPrice());
+            goodInfoSimple.setTitle(good.getTitle());
+            String imageId = good.getShow();
+            FruitGoodAlbum fruitGoodAlbum = fruitGoodAlbumDao.findById(imageId);
+            goodInfoSimple.setShow(fruitGoodAlbum.getValue());
+            resultList.add(goodInfoSimple);
+        }
+        getHomeListResponse.setHasNext(resultList.size()>= pager.getPageSize());
         return getHomeListResponse;
     }
 
