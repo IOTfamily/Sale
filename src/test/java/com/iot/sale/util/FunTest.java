@@ -15,19 +15,20 @@ public class FunTest {
 
     @Test
     public void random(){
-        Integer length = 6;
-        StringBuilder randCode = new StringBuilder();
-        while (randCode.length() < length) {
-            Random rand =new Random();
-            System.out.println(rand.nextInt(10));
-
-            randCode.append(rand.nextInt(10));
-        }
-        System.out.println(randCode.toString());
+//        Integer length = 6;
+//        StringBuilder randCode = new StringBuilder();
+//        while (randCode.length() < length) {
+//            Random rand =new Random();
+//            System.out.println(rand.nextInt(10));
+//
+//            randCode.append(rand.nextInt(10));
+//        }
+//        System.out.println(randCode.toString());
     }
 
     @Test
     public void log(){
-        log();
+//        log();
+
     }
 }

@@ -39,13 +39,13 @@ public class SmsTest {
 
     @Test
     public void sendSms() {
-        Map<String, String> map = new HashMap<>();
-        DateUtil dateUtil = new DateUtil();
-        map.put("name", "黑社会大哥");
-        map.put("time", dateUtil.getFormatDate());
-        Boolean res = Sms.sendSms("13051813611","SMS_78760146", map);
-
-        System.out.println(res ? "success" : "fail");
+//        Map<String, String> map = new HashMap<>();
+//        DateUtil dateUtil = new DateUtil();
+//        map.put("name", "黑社会大哥");
+//        map.put("time", dateUtil.getFormatDate());
+//        Boolean res = Sms.sendSms("13051813611","SMS_78760146", map);
+//
+//        System.out.println(res ? "success" : "fail");
     }
 
     @Test
