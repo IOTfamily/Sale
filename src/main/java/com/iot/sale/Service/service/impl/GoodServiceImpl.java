@@ -122,6 +122,7 @@ public class GoodServiceImpl implements GoodService {
             getGood.setUpdateTime(fruitGood.getUpdateTime());
             getGood.setGoodDesc(fruitGood.getGoodDesc());
             getGood.setSourceMd5(fruitGood.getSourceMd5());
+            getGood.setSize((fruitGood.getSize()));
 
 
             JSONArray banners = JSONUtil.parseArray(fruitGood.getBanner());
